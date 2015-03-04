@@ -1,0 +1,31 @@
+﻿{
+  "manifest_version": 2,
+  "name": "企业QQ广播插件_正式版",
+  "short_name": "QQ_BDCT_PLUG",
+  "version": "1.1",
+  "offline_enabled": true,
+  "browser_action": {
+    "default_icon": "16.png",
+    "default_popup": "popup.html",
+    "default_title": "企业QQ广播插件_正式版"
+  },
+  "description": "同步企业qq的用户名单标签到培训&考试系统，将参训名单批量导入广播名单",
+  "icons": {
+    "16": "images/icons/16.png",
+    "48": "images/icons/48.png",
+    "128": "images/icons/128.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["js/jquery.js","js/content.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    }
+  ],
+  "homepage_url": "http://test_hr.admin.37.com",
+  "permissions": ["cookies", "clipboardWrite", "clipboardRead", "tabs", "activeTab", "storage", "unlimitedStorage", "contextMenus", "notifications", "<all_urls>"]
+}

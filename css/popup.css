@@ -1,0 +1,82 @@
+body{
+    width:600px;
+}
+
+#container{
+    opacity: 0.9;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: block;
+}
+.btn{
+    padding:5px;
+    width:auto;
+    height:25px;
+    color: #ffffff;
+    background:#0094ff;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius:5px;
+    border: 0px solid #ffffff;
+    outline: none;
+}
+
+#pick_user{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#course_list{
+    float: left;
+    padding: 5px;
+    width: 95%;
+}
+
+#user_list{
+    float: left;
+    padding: 5px;
+    width: 95%;
+}
+
+#main{
+    float: left;
+    width: 96%;
+    min-height: 50px;
+    padding: 5px;
+    border: 1px solid #5a84b3;
+}
+
+#fill_receive_list_btn{
+    margin-left:14px ;
+}
+#tip{
+    margin-left:14px ;
+    color: red;
+}
+
+.active{
+    padding: 3px 3px 0 3px;
+    text-decoration: none;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: red;
+    border-top:1px solid #5a84b3 ;
+    border-left:1px solid #5a84b3 ;
+    border-right:1px solid #5a84b3;
+    border-bottom:1px solid #ffffff ;
+}
+
+.unactive{
+    padding: 3px 3px 0 3px;
+    text-decoration: none;
+    color: #000000;
+    border-top:1px solid yellowgreen;
+    border-left:1px solid yellowgreen ;
+    border-right:1px solid yellowgreen ;
+    border-bottom:0px solid #ffffff ;
+}
