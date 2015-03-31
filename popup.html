@@ -10,48 +10,38 @@
 
   <input  type="button" id="pick_user" class="btn" value="从企业QQ更新用户信息"> <i>在企业QQ广播里选择的用户，才会被更新到培训&考试系统。</i>
 
-  <div id="operate">
-    <a href="javascript:;" id="course_list_show" class="active">正在开展中的课程</a>
-    <a href="javascript:;" id="user_without_qq_list_show" class="unactive">系统未匹配的用户</a>
-    <a href="javascript:;" id="import_qq_user_show" class="unactive">导入QQ用户 Excel</a>
-  </div>
+  <ul id="operate">
+    <li id="course_list_show" class="active">正在开展中的课程</li>
+    <li id="user_without_qq_list_show" class="unactive">系统未匹配的用户</li>
+    <li id="import_qq_user_show" class="unactive">导入QQ用户 Excel</li>
+  </ul>
   <div id="main">
-    <div id="course" class="show">
-      <div id="course_list"> 暂无 </div>
-      <input type="button" class="btn" id="fill_receive_list_btn" value="填充参训名单到企业QQ">
-      <span id="tip">  </span>
+    <div id="course" class="show w_per_100">
+      <div id="course_list w_per_100"> 暂无 </div>
+      <div class="w_per_100"><a class="btn hide" id="fill_receive_list_btn" >填充参训名单到企业QQ</a></div>
     </div>
-    <div id="user" class="hide">
+    <div id="user" class="hide w_per_100">
       <div id="user_list"> 暂无，可能是培训&考试系统不是最新 </div>
     </div>
 	
-	<div id="import_qq_user" class="hide">
-		<form id="import_qq_user_form" target="container_for_import" action="http://local.admin.train.hr.37wan.com/api/train/importQQUserByExcel.php" method="post" enctype="multipart/form-data">
-
-		</form>
-        <div id="tip2">  </div>
-        <iframe id="container_for_import" name="container_for_import" class="hide"> </iframe>
-
-      <p>提示：导入 excel 须遵循模板的格式，
-        <a style="color:red;" id="qq_user_template"  href="http://local.admin.train.hr.37wan.com/template/xls/qq_user.xls">下载模板</a>
-
-      </p>
-      <p>
-        <input type="file" name="excel_file" size="150">
-        <input type="button" name="import_submit" value="确 认">
-      </p>
-
-
+	<div id="import_qq_user" class="hide w_per_100">
+      <iframe id="container_for_form" name="container_for_form" class="hide"> </iframe>
+      <span>提示：导入 excel 须遵循模板的格式，<a style="color:red;" id="qq_user_template"  href="javascript:;">下载模板</a></span>
+      <div class="w_per_100">
+        <form id="import_qq_user_form" name="import_qq_user_form" target="container_for_form" action="javascript:;" method="post" enctype="multipart/form-data">
+          <input type="file" class="txt_input" id="excel_file" name="excel_file" >
+          <a  class="btn" name="import_submit" id="import_submit">确 认</a>
+        </form>
+      </div>
 	</div>
-
-
-
   </div>
+  <div id="tip"  class="w_per_100">  </div>
+
 
 </div>
 
 </body>
 <script src="js/jquery.js"></script>
-<script src="js/ajaxfileupload.js"></script>
+<script src="js/jquery-form.js.js"></script>
 <script src="js/popup.js"></script>
 </html>

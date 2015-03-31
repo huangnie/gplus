@@ -1,12 +1,10 @@
 var bg = chrome.extension.getBackgroundPage();
 var req = bg.req;
 var user = bg.user;
+var config = bg.config;
 var host = bg.HOST;
 var course_id = 0;
 function init(){
-
-    //$('#import_qq_user_form').attr('action', host + $('#import_qq_user_form').attr('action'));
-    //$('#qq_user_template').attr('href', host + $('#qq_user_template').attr('href'));
 
     $('#course_list_show').click(function(){
         $('#user_without_qq_list_show').removeClass('active');
@@ -24,6 +22,8 @@ function init(){
     $('#user_without_qq_list_show').click(function(){
         $('#course_list_show').removeClass('active');
         $('#course_list_show').addClass('unactive');
+        $('#import_qq_user_show').removeClass('active');
+        $('#import_qq_user_show').addClass('unactive');
         $(this).removeClass('unactive');
         $(this).addClass('active');
         $('#course').hide();
@@ -73,6 +73,50 @@ function init(){
                 tip += typeof member == typeof ['1'] && member.length>0 ? member.join(';') : '';
                 $("#tip").html( tip );
             });  //
+    });
+
+    $('#qq_user_template').click(function(){
+
+        var form=$("<form>");                                   //定义一个form表单
+        form.attr("style","display:none");
+        form.attr("target","");
+        form.attr("method","post");
+        form.attr("action",config.URI.TEMPLATE_BDCT_EXCEL_PATH);
+        $("#container_for_form").html(form);             //将表单放置在web中
+        form.submit();//表单提交
+    });
+
+    $('#import_submit').click(function(){
+
+        var files = $('input[name="excel_file"]').prop('files');//获取到文件列表
+
+        if(files.length == 0){
+            alert('请选择文件');
+            return;
+        }else{
+            var file = files[0];
+
+            var arr = file.name.split('.');
+            var ext = arr[arr.length-1];
+            if(ext != 'xls' && ext !=='xlsx'){
+                alert('请选择Excel文件');
+                return;
+            }
+
+            var reader = new FileReader();//新建一个FileReader
+            //reader.readAsArrayBuffer( files[0]);//读取文件
+            reader.readAsDataURL( files[0] );
+            //reader.readAsText( files[0], "UTF-8");//读取文件
+            //reader.readAsBinaryString( files[0]);//读取文件
+            reader.onload = function(evt){ //读取完文件之后会回来这里
+                var fileString = evt.target.result;
+                //var fileString = reader.result;
+                user.addByExcel(fileString, ext, function(msg){
+                    $('#tip').html(msg);
+                })
+            }
+        }
+        return;
     });
 
     req.getCourse(

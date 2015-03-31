@@ -6,19 +6,11 @@ window.config = {
     URI:{
         SELECT_COURSE_PATH: HOST + '/api/train/all_train_ing_course.php',
         SELECT_COURSE_MEMBER_PATH: HOST +  '/api/train/participants_of_course.php',
-        SELECT_USER_WITHOUT_QQ_PATH: HOST +  '/api/train/getUserWithoutQQ.php',
-        UPDATE_BDCT_MEMBER_PATH: HOST +  '/api/train/updateUserForBDCT.php'
+        SELECT_USER_WITHOUT_QQ_PATH: HOST +  '/api/train/getUser.php',
+        UPDATE_BDCT_MEMBER_PATH: HOST +  '/api/train/updateUserForBDCT.php',
+        TEMPLATE_BDCT_EXCEL_PATH: HOST  + '/template/xls/qq_user.xls'
     }
 };
-
-// 发消息, 以下两种都可以
-var sendMsg2 = function(data, callback){
-    chrome.tabs.getSelected(null, function(tab) {
-        chrome.tabs.sendMessage(tab.id,data, function(response) {
-            if(typeof callback == 'function') callback(response);
-        });
-    });
-}
 
 // 发消息
 var sendMsg = function(data, callback){
@@ -83,8 +75,7 @@ var req = {
 var user = {
 
     add:function(content,callback){
-
-        $.post(config.URI.UPDATE_BDCT_MEMBER_PATH,{content:content},'json')
+        $.post(config.URI.UPDATE_BDCT_MEMBER_PATH,{type:'arr',content:content},'json')
             .success(function(resp) {
                 resp = JSON.parse(resp);
                 var data = {status:1, msg: "addUser_over", content:resp.msg };
@@ -93,6 +84,20 @@ var user = {
             .error(function() {
                 var data = {status:0, msg: "addUser_over", content:'failed for net_error'};
                 if(typeof callback == 'function') callback(data);
+            })
+            .complete(function() {
+
+            });
+    },
+
+    addByExcel:function(content, ext, callback){
+        $.post(config.URI.UPDATE_BDCT_MEMBER_PATH,{type:'excel_base64',content: content},'json')
+            .success(function(resp) {
+                //resp = JSON.parse(resp);
+                if(typeof callback == 'function') callback(resp);
+            })
+            .error(function() {
+                if(typeof callback == 'function') callback('failed for net_error');
             })
             .complete(function() {
 
@@ -114,13 +119,3 @@ var user = {
     }
 
 }
-
-// 收到消息
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        var msg = sender.tab ? "here is bg, receive mas from a content script, and the web page url is:" + sender.tab.url : "from the extension";
-        console.log(request);
-
-        sendResponse({status:1, msg:'goodbye',content: "_from_bg_response"});
-    });
-

@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(
         }else if(request.msg == 'picUser'){
             var users = new Array();
             var  arr = $("#resultSelMembers").children('li');
-            if(arr.length==0){
+            if(typeof  arr == undefined || arr.length==0){
                 alert('请在企业QQ中选择（添加）用户');
                 return;
             }else{
@@ -49,15 +49,3 @@ chrome.runtime.onMessage.addListener(
             alert(request.content);
         }
     });
-
-var button = $("#mybutton");
-if(button.hasOwnProperty('addEventListener')){
-    button.addEventListener("click", function()  {
-        var data = {status:1,msg: "hello",content:''};
-        // 发送消息
-        chrome.runtime.sendMessage(data, function(response) {
-            console.log(response.content);
-            alert('fg 发送消息后：'+response.content);
-        });
-    }, false);
-}
